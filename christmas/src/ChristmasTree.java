@@ -3,7 +3,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-public class ChristmasTree {
+public class Christmas {
     public static void main(String[] args){
         HashMap<String, Integer> toys = new HashMap<>() {{
 
@@ -14,7 +14,7 @@ public class ChristmasTree {
             put("^", 3);
 
         }};
-        printChristmasTree(6, toys);
+        printChristmasTree(7, toys);
     }
 
     public static void printChristmasTree(int n, HashMap<String, Integer> toys){
@@ -58,14 +58,14 @@ public class ChristmasTree {
 
     public static String getStarRow(int n){
         StringBuilder result = new StringBuilder();
-            for (int i=0; i<=n; i++){
-                result.append("*").append(" ");
+        for (int i=0; i<=n; i++){
+            result.append("*").append(" ");
         }
         return result.toString();
     }
 
     public static String[] getTriangle(int n){
-        String[] triangle = new String[n-3];
+        String[] triangle = new String[n-1];
         for (int i = 0; i<triangle.length; i++){
             triangle[triangle.length-i-1] = getStarRow(n-i);
         }
@@ -83,13 +83,17 @@ public class ChristmasTree {
         for (int i = 0; i<arr.length; i++){
             int randomToyApproval = rand.nextInt(2);
             if(randomToyApproval == 1){
-                int randomToy = rand.nextInt(keysList.size());
-                int randomToyPosition = rand.nextInt(arr[i].length());
-                if (arr[i].charAt(randomToyPosition) != ' ' && valuesArray[randomToy]!= 0){
-                    char[] line = arr[i].toCharArray();
-                    line[randomToyPosition] = keysList.get(randomToy).charAt(0);
-                    arr[i] = String.valueOf(line);
-                    valuesArray[randomToy]--;
+                boolean untoyed = true;
+                while (untoyed){
+                    int randomToy = rand.nextInt(keysList.size());
+                    int randomToyPosition = rand.nextInt(arr[i].length());
+                    if (arr[i].charAt(randomToyPosition) != ' ' && valuesArray[randomToy]!= 0){
+                        char[] line = arr[i].toCharArray();
+                        line[randomToyPosition] = keysList.get(randomToy).charAt(0);
+                        arr[i] = String.valueOf(line);
+                        valuesArray[randomToy]--;
+                        untoyed = false;
+                    }
                 }
             }
         }
@@ -100,7 +104,7 @@ public class ChristmasTree {
         Random rand = new Random();
         String[] firstTriangle = {"* ", "* * ", "* * * ", "* * * * "};
         String[][] arrayOfTriangles = new String[n][];
-        arrayOfTriangles[0]=firstTriangle;
+        arrayOfTriangles[0]=getTriangleToyed(firstTriangle, toys);
         for (int i = 1; i <arrayOfTriangles.length; i++){
             int a = ((arrayOfTriangles[i-1][arrayOfTriangles[i-1].length-1].length()+1))/2;
             int b = a + 3;
