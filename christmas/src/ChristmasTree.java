@@ -3,7 +3,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-public class Christmas {
+public class ChristmasTree {
     public static void main(String[] args){
         HashMap<String, Integer> toys = new HashMap<>() {{
 
